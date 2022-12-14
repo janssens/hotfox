@@ -8,9 +8,9 @@ services:
       - mariadb_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: dabba
-      MYSQL_USER: dabba
-      MYSQL_PASSWORD: dabba
+      MYSQL_DATABASE: hotfox
+      MYSQL_USER: hotfox
+      MYSQL_PASSWORD: hotfox
 
   php:
     build:
@@ -36,6 +36,6 @@ services:
   mailcatcher:
     image: sj26/mailcatcher
     ports:
-      - "1080:1080"
+      - "8080:1080"
 volumes:
   mariadb_data:
