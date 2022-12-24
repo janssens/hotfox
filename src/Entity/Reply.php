@@ -13,9 +13,6 @@ class Reply
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'integer')]
-    private $value;
-
     #[ORM\ManyToOne(targetEntity: Instructor::class, inversedBy: 'replies')]
     #[ORM\JoinColumn(nullable: false)]
     private $inspector;
@@ -24,21 +21,13 @@ class Reply
     #[ORM\JoinColumn(nullable: false)]
     private $race;
 
+    #[ORM\ManyToOne(targetEntity: Question::class, inversedBy: 'replies')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $answer;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getValue(): ?int
-    {
-        return $this->value;
-    }
-
-    public function setValue(int $value): self
-    {
-        $this->value = $value;
-
-        return $this;
     }
 
     public function getInspector(): ?Instructor
@@ -61,6 +50,18 @@ class Reply
     public function setRace(?Race $race): self
     {
         $this->race = $race;
+
+        return $this;
+    }
+
+    public function getAnswer(): ?Question
+    {
+        return $this->answer;
+    }
+
+    public function setAnswer(?Question $answer): self
+    {
+        $this->answer = $answer;
 
         return $this;
     }

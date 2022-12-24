@@ -51,6 +51,8 @@
 # Embedded web-server pid file
 /.web-server-pid
 
+/public/bundles/
+
 .env.local
 .env.prod
 .env.prod.local
