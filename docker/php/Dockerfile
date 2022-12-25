@@ -1,10 +1,10 @@
 FROM php:8.0.11-fpm-alpine
 
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN apk add icu-dev php-curl
 
-RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions @composer pdo_mysql intl
-#gd
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+
+RUN docker-php-ext-configure intl && docker-php-ext-install mysqli pdo pdo_mysql intl
 
 RUN set -eux \
     & apk add \

@@ -48,5 +48,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Les instructeurs', 'fas fa-list', Instructor::class);
         yield MenuItem::linkToCrud('Les épreuves', 'fas fa-list', Race::class);
         yield MenuItem::linkToCrud('Les questions', 'fas fa-list', Question::class);
+        yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
     }
 }

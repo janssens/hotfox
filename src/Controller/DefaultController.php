@@ -15,4 +15,19 @@ class DefaultController extends AbstractController
             'controller_name' => 'DefaultController',
         ]);
     }
+
+    #[Route('/reply/', name: 'reply')]
+    public function reply(): Response
+    {
+        //get reply by token
+        //get instructor
+        //get race
+        //get question
+        //check for existing reply
+        // if exist
+        // ask for new reply
+        // else
+        // create a new reply
+        return $this->render('default/index.html.twig');
+    }
 }

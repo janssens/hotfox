@@ -1,0 +1,6 @@
+{# templates/emails/new_race.html.twig #}
+
+question :
+{% for question in questions %}
+<a href="#">{{ question.content }}</a>
+{% endfor %}

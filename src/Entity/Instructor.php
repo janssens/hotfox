@@ -36,8 +36,11 @@ class Instructor
     #[ORM\Column(type: 'boolean')]
     private $is_active;
 
-    #[ORM\OneToMany(mappedBy: 'inspector', targetEntity: Reply::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'instructor', targetEntity: Reply::class, orphanRemoval: true)]
     private $replies;
+
+    #[ORM\OneToOne(mappedBy: 'instructor', targetEntity: User::class, cascade: ['persist', 'remove'])]
+    private $user;
 
     public function __construct()
     {
@@ -71,6 +74,11 @@ class Instructor
         $this->lastname = $lastname;
 
         return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->getFirstname().' '.$this->getLastname();
     }
 
     public function getEmail(): ?string
@@ -145,7 +153,7 @@ class Instructor
     {
         if (!$this->replies->contains($reply)) {
             $this->replies[] = $reply;
-            $reply->setInspector($this);
+            $reply->setInstructor($this);
         }
 
         return $this;
@@ -155,10 +163,32 @@ class Instructor
     {
         if ($this->replies->removeElement($reply)) {
             // set the owning side to null (unless already changed)
-            if ($reply->getInspector() === $this) {
-                $reply->setInspector(null);
+            if ($reply->getInstructor() === $this) {
+                $reply->setInstructor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setInstructor(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getInstructor() !== $this) {
+            $user->setInstructor($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }

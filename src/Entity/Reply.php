@@ -6,6 +6,7 @@ use App\Repository\ReplyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReplyRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Reply
 {
     #[ORM\Id]
@@ -15,29 +16,38 @@ class Reply
 
     #[ORM\ManyToOne(targetEntity: Instructor::class, inversedBy: 'replies')]
     #[ORM\JoinColumn(nullable: false)]
-    private $inspector;
+    private $instructor;
 
     #[ORM\ManyToOne(targetEntity: Race::class, inversedBy: 'replies')]
     #[ORM\JoinColumn(nullable: false)]
     private $race;
 
     #[ORM\ManyToOne(targetEntity: Question::class, inversedBy: 'replies')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $answer;
+
+    #[ORM\Column(type: 'string', length: 50, unique: true)]
+    private $token;
+
+    #[ORM\PrePersist]
+    public function setToken(): void
+    {
+        $this->token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getInspector(): ?Instructor
+    public function getInstructor(): ?Instructor
     {
-        return $this->inspector;
+        return $this->instructor;
     }
 
-    public function setInspector(?Instructor $inspector): self
+    public function setInstructor(?Instructor $instructor): self
     {
-        $this->inspector = $inspector;
+        $this->instructor = $instructor;
 
         return $this;
     }
@@ -65,4 +75,10 @@ class Reply
 
         return $this;
     }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
 }
