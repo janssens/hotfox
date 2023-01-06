@@ -37,6 +37,9 @@ class Race
     #[ORM\OneToMany(mappedBy: 'race', targetEntity: Reply::class, orphanRemoval: true)]
     private $replies;
 
+    #[ORM\ManyToOne(targetEntity: Instructor::class, inversedBy: 'races')]
+    private $instructor;
+
     public function __construct()
     {
         $this->replies = new ArrayCollection();
@@ -151,6 +154,18 @@ class Race
                 $reply->setRace(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInstructor(): ?Instructor
+    {
+        return $this->instructor;
+    }
+
+    public function setInstructor(?Instructor $instructor): self
+    {
+        $this->instructor = $instructor;
 
         return $this;
     }

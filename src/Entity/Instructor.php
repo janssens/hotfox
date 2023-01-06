@@ -42,9 +42,13 @@ class Instructor
     #[ORM\OneToOne(mappedBy: 'instructor', targetEntity: User::class, cascade: ['persist', 'remove'])]
     private $user;
 
+    #[ORM\OneToMany(mappedBy: 'instructor', targetEntity: Race::class)]
+    private $races;
+
     public function __construct()
     {
         $this->replies = new ArrayCollection();
+        $this->races = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -189,6 +193,36 @@ class Instructor
         }
 
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Race>
+     */
+    public function getRaces(): Collection
+    {
+        return $this->races;
+    }
+
+    public function addRace(Race $race): self
+    {
+        if (!$this->races->contains($race)) {
+            $this->races[] = $race;
+            $race->setInstructor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRace(Race $race): self
+    {
+        if ($this->races->removeElement($race)) {
+            // set the owning side to null (unless already changed)
+            if ($race->getInstructor() === $this) {
+                $race->setInstructor(null);
+            }
+        }
 
         return $this;
     }
