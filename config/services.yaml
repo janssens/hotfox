@@ -20,7 +20,7 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\EventListener\UserInsctructorLink:
+    App\EventListener\UserInstructorLink:
         tags:
             -
                 name: 'doctrine.event_listener'

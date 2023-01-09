@@ -7,6 +7,8 @@ use App\Entity\Question;
 use App\Entity\Race;
 use App\Entity\Reply;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use PharIo\Manifest\Exception;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
@@ -14,7 +16,14 @@ use Symfony\Component\Mime\Email;
 class RaceEmailer
 {
 
-    public function postPersist(LifecycleEventArgs $args, MailerInterface $mailer): void
+    private $mailer;
+
+    public function __construct(MailerInterface $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
+    public function postPersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();
 
@@ -47,7 +56,7 @@ class RaceEmailer
             }
             $entityManager->flush();
             foreach ($instructors as $instructor) {
-                $email = (new Email())
+                $email = (new TemplatedEmail())
                     ->from('hello@example.com')
                     ->to(new Address($instructor->getEmail(),$instructor->getName()))
                     //->cc('cc@example.com')
@@ -59,8 +68,12 @@ class RaceEmailer
                         'reply' => $sortedReplies[$instructor->getId()],
                         'questions' => $questions,
                     ]);
-
-                $mailer->send($email);
+                try {
+                    $this->mailer->send($email);
+                } catch (Exception $e) {
+                    var_dump($e);
+                    die();
+                }
             }
 
         }
