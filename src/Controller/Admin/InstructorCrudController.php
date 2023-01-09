@@ -19,8 +19,8 @@ class InstructorCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Instructeur')
-            ->setEntityLabelInPlural('Instructeurs')
+            ->setEntityLabelInSingular('instructeur')
+            ->setEntityLabelInPlural('instructeurs')
             ->setPageTitle('index', 'Liste des %entity_label_plural%')
             ->setPageTitle('detail', fn (Instructor $instructor) => (string) $instructor->getName())
             ->setPageTitle('edit', fn (Instructor $instructor) => sprintf('Edition de <b>%s</b>', $instructor->getName()));

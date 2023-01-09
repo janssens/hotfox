@@ -51,6 +51,9 @@ class Instructor
         $this->races = new ArrayCollection();
     }
 
+    public function __toString(){
+        return $this->getName() .' - '.$this->getState(). ' - '. $this->getClub();
+    }
     public function getId(): ?int
     {
         return $this->id;
