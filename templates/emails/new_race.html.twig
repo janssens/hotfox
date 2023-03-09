@@ -1,6 +1,21 @@
 {# templates/emails/new_race.html.twig #}
 
-question :
+Bonjour à toutes et à tous,
+vous êtes référencés comme instructeurs Raid.
+
+Une nouvelle épreuve de raid est à instruire.
+
+<b>{{ race.name }}</b> programmé le <i>{{ race.date|date('d M Y') }}</i> dans
+{% if race.states | length > 1 %}les departements
+{% else %} le département
+{% endif %}
+{{ race.states | join(', ', ' et ') }}
+<br>
+Positionnez vous : <br>
+
 {% for question in questions %}
 <a href="#">{{ question.content }}</a>
 {% endfor %}
+
+Merci pour vos retours,
+cordialement
