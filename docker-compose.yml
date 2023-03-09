@@ -35,3 +35,4 @@ services:
     image: sj26/mailcatcher
     ports:
       - "8080:1080"
+      - "1025:1025"
