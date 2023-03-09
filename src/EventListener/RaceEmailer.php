@@ -68,6 +68,7 @@ class RaceEmailer
                     ->subject('Time for Symfony Mailer!')
                     ->htmlTemplate('emails/new_race.html.twig')
                     ->context([
+                        'race' => $entity,
                         'reply' => $sortedReplies[$instructor->getId()],
                         'questions' => $questions,
                     ]);

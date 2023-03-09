@@ -27,9 +27,6 @@ class Instructor
     #[ORM\Column(type: 'string', length: 15, nullable: true)]
     private $phone;
 
-    #[ORM\Column(type: 'integer')]
-    private $state;
-
     #[ORM\Column(type: 'string', length: 100)]
     private $club;
 
@@ -44,6 +41,10 @@ class Instructor
 
     #[ORM\OneToMany(mappedBy: 'instructor', targetEntity: Race::class)]
     private $races;
+
+    #[ORM\ManyToOne(targetEntity: State::class, inversedBy: 'instructors')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $state;
 
     public function __construct()
     {
@@ -108,18 +109,6 @@ class Instructor
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
-
-        return $this;
-    }
-
-    public function getState(): ?int
-    {
-        return $this->state;
-    }
-
-    public function setState(int $state): self
-    {
-        $this->state = $state;
 
         return $this;
     }
@@ -226,6 +215,18 @@ class Instructor
                 $race->setInstructor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getState(): ?State
+    {
+        return $this->state;
+    }
+
+    public function setState(?State $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }

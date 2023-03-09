@@ -25,9 +25,6 @@ class Race
     #[ORM\Column(type: 'date')]
     private $deposit_date;
 
-    #[ORM\Column(type: 'simple_array')]
-    private $states = [];
-
     #[ORM\Column(type: 'datetime_immutable')]
     private $created_at;
 
@@ -40,9 +37,13 @@ class Race
     #[ORM\ManyToOne(targetEntity: Instructor::class, inversedBy: 'races')]
     private $instructor;
 
+    #[ORM\ManyToMany(targetEntity: State::class, mappedBy: 'races')]
+    private $states;
+
     public function __construct()
     {
         $this->replies = new ArrayCollection();
+        $this->states = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
@@ -88,18 +89,6 @@ class Race
     public function setDepositDate(\DateTimeInterface $deposit_date): self
     {
         $this->deposit_date = $deposit_date;
-
-        return $this;
-    }
-
-    public function getStates(): ?array
-    {
-        return $this->states;
-    }
-
-    public function setStates(array $states): self
-    {
-        $this->states = $states;
 
         return $this;
     }
@@ -166,6 +155,33 @@ class Race
     public function setInstructor(?Instructor $instructor): self
     {
         $this->instructor = $instructor;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, State>
+     */
+    public function getStates(): Collection
+    {
+        return $this->states;
+    }
+
+    public function addState(State $state): self
+    {
+        if (!$this->states->contains($state)) {
+            $this->states[] = $state;
+            $state->addRace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeState(State $state): self
+    {
+        if ($this->states->removeElement($state)) {
+            $state->removeRace($this);
+        }
 
         return $this;
     }

@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\Instructor;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -30,13 +32,14 @@ class InstructorCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('ID'),
+            IdField::new('ID')->hideWhenCreating(),
             TextField::new('firstname','prénom'),
             TextField::new('lastname','nom'),
             TextField::new('email','courriel'),
             TextField::new('phone','téléphone'),
-            IntegerField::new('state','département'),
+            AssociationField::new('state','département'),
             TextField::new('club','club'),
+            BooleanField::new('is_active','Peut instruire (actif) ?'),
         ];
     }
 
