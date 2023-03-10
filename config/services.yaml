@@ -31,7 +31,10 @@ services:
     App\EventListener\RaceEmailer:
         tags:
             -
-                name: 'doctrine.event_listener'
-                event: 'postPersist'
-                priority: 500
-                connection: 'default'
+              name: kernel.event_listener
+              event: race.sendmail
+              method: sendEmail
+            -
+              name: kernel.event_listener
+              event: race.forcesendmail
+              method: forceSendEmail

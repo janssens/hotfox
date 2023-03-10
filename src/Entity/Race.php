@@ -38,6 +38,7 @@ class Race
     private $instructor;
 
     #[ORM\ManyToMany(targetEntity: State::class, mappedBy: 'races')]
+    #[ORM\JoinTable(name: 'state_race')]
     private $states;
 
     public function __construct()
@@ -60,6 +61,17 @@ class Race
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function getDisplayName(): ?string
+    {
+        $states = [];
+        foreach ($this->getStates() as $state){
+            $states[] = $state->getCode();
+        }
+        if ($states)
+            return $this->getName().' ('.implode(',',$states).')';
+        return $this->getName();
     }
 
     public function setName(string $name): self
