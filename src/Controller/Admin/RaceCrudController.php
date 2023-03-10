@@ -48,7 +48,8 @@ class RaceCrudController extends AbstractCrudController
             TextField::new('name','Nom de l\'événement'),
             DateTimeField::new('date','Date de l\'épreuve'),
             DateTimeField::new('deposit_date','Date de dépot du dossier'),
-            AssociationField::new('states','Départements concernés'),
+            AssociationField::new('states','Départements concernés')
+                ->setFormTypeOptionIfNotSet('by_reference', false),
             AssociationField::new('instructor','Instructeur assigné'),
             BooleanField::new('email_sent','Email déjà envoyé aux instructeur ?'),
             DateTimeField::new('createdAt')->onlyOnDetail(),
