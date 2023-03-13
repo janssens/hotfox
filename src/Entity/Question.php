@@ -18,7 +18,7 @@ class Question
     #[ORM\Column(type: 'string', length: 255)]
     private $content;
 
-    #[ORM\Column(type: 'string', length: 50)]
+    #[ORM\Column(type: 'string', length: 50, unique: true)]
     private $short;
 
     #[ORM\Column(type: 'boolean')]
@@ -26,6 +26,9 @@ class Question
 
     #[ORM\OneToMany(mappedBy: 'answer', targetEntity: Reply::class)]
     private $replies;
+
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private $color;
 
     public function __construct()
     {
@@ -99,6 +102,18 @@ class Question
                 $reply->setAnswer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

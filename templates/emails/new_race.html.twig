@@ -1,10 +1,10 @@
 {# templates/emails/new_race.html.twig #}
 
-Bonjour à toutes et à tous,
-vous êtes référencés comme instructeurs Raid.
-
-Une nouvelle épreuve de raid est à instruire.
-
+Bonjour à toutes et à tous,<br>
+vous êtes référencés comme instructeurs Raid.<br>
+<br>
+Une nouvelle épreuve de raid est à instruire.<br>
+<br>
 <b>{{ race.name }}</b> programmé le <i>{{ race.date|date('d M Y') }}</i> dans
 {% if race.states | length > 1 %}les departements
 {% else %} le département
@@ -13,9 +13,15 @@ Une nouvelle épreuve de raid est à instruire.
 <br>
 Positionnez vous : <br>
 
-{% for question in questions %}
-<a href="#">{{ question.content }}</a>
-{% endfor %}
+<table>
+    <tr>
+        {% for question in questions %}
+            <td style="padding: 1rem"><a style="display:block; background: {{ question.color ? question.color : "#000" }}; text-decoration: none; margin: 10px; border: 1px solid #0e4e36;border-radius: 5px; color: black; padding: 1rem;"
+                                         href="{{ url('reply', {'short' : question.short,'token': reply.token }) }}">{{ question.content }}</a></td>
+        {% endfor %}
+    </tr>
+</table>
 
-Merci pour vos retours,
+<br>
+Merci pour vos retours,<br>
 cordialement

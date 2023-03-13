@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DefaultController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    </style>
+
+    <div class="example-wrapper">
+        <p>{{ message }}</p>
+        <form action="{{ url('reply') }}" method="post">
+            <input type="hidden" value="{{ token }}" name="token">
+            {% for question in questions %}
+                <label for="{{ question.id }}" {% if question.color %}style="color:{{ question.color }}"{% endif %}>
+                    <input id="{{ question.id }}" type="radio" name="short" value="{{ question.short }}" {% if answer == question %} checked="checked" {% endif %}>
+                    <span>{{ question.content }}</span>
+                </label>
+                <br>
+            {% endfor %}
+            <button type="submit">Modifier ma réponse</button>
+        </form>
+    </div>
+{% endblock %}

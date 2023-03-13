@@ -56,5 +56,6 @@
 .env.local
 .env.prod
 .env.prod.local
+.env.dev.local
 
 .idea/*

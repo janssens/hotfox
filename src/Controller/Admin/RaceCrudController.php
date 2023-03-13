@@ -86,7 +86,6 @@ class RaceCrudController extends AbstractCrudController
         $race = $context->getEntity()->getInstance();
         $event = new SendRaceEmailEvent($race);
         $this->eventDispatcher->dispatch($event, SendRaceEmailEvent::NAME_FORCE);
-
         return $this->redirect($context->getReferrer());
     }
 
