@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\State;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -50,6 +51,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Les départements', 'fas fa-location-dot', State::class);
         yield MenuItem::linkToCrud('Les épreuves', 'fas fa-person-running', Race::class);
         yield MenuItem::linkToCrud('Les questions', 'fas fa-question', Question::class);
+        yield MenuItem::linkToCrud('Les utilisateurs', 'fas fa-user', User::class);
         yield MenuItem::linkToLogout('Logout', 'fas fa-sign-out');
     }
 }

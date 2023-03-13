@@ -21,4 +21,6 @@ mailcatcher run at http://localhost:8080/
 
 
 todo :
-https://stackoverflow.com/questions/41748006/symfony-persisting-manytomany-relation
+
+## colors
+- https://flatuicolors.com/palette/ca
