@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bin/clinotty mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini.dis /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+bin/restart php
