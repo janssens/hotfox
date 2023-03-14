@@ -20,5 +20,4 @@ jobs:
           TARGET: ${{ secrets.SSH_ROOT_PATH }}
           POST_SCRIPT: |
             cd ${{ secrets.SSH_ROOT_PATH }}
-            composer install
-            php bin/console cache:clear
+            composer install --no-dev
