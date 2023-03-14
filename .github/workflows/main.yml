@@ -9,14 +9,14 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
-      - name: 🚀 deploy src 📁
+      - name: 🚀 deploy all 📁
         uses: up9cloud/action-rsync@master
         env:
           HOST: ${{ secrets.SSH_HOST }}
           USER: ${{ secrets.SSH_USER }}
           PORT: ${{ secrets.SSH_PORT }}
           KEY: ${{secrets.SSH_KEY}}
-          SOURCE: ./src
+          SOURCE: ./
           TARGET: ${{ secrets.SSH_ROOT_PATH }}
           POST_SCRIPT: |
             cd ${{ secrets.SSH_ROOT_PATH }}
