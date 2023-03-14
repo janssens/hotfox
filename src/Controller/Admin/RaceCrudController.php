@@ -61,7 +61,7 @@ class RaceCrudController extends AbstractCrudController
                 })
                 ->setFormTypeOptionIfNotSet('by_reference', false),
             AssociationField::new('instructor','Instructeur assigné'),
-            BooleanField::new('email_sent','Email déjà envoyé aux instructeur ?'),
+            BooleanField::new('email_sent','Email déjà envoyé aux instructeurs ?'),
             ArrayField::new('replies','réponses')
                 ->onlyOnDetail()
         ];
