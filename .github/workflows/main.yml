@@ -9,10 +9,6 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
-      - name: 🛠️ composer-php
-        uses: nick-zh/composer@php7.4
-        with:
-          action: 'install'
       - name: 🚀 deploy src 📁
         uses: up9cloud/action-rsync@master
         env:
@@ -23,5 +19,6 @@ jobs:
           SOURCE: ./src
           TARGET: ${{ secrets.SSH_ROOT_PATH }}
           POST_SCRIPT: |
-            cd ${{ secrets.SSH_ROOT_PATH }} 
+            cd ${{ secrets.SSH_ROOT_PATH }}
+            composer install
             php bin/console cache:clear
