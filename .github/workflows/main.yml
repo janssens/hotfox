@@ -21,4 +21,5 @@ jobs:
           ARGS_MORE: --filter=':- .gitignore' --delete-after
           POST_SCRIPT: |
             cd ${{ secrets.SSH_ROOT_PATH }}
-            composer install --no-dev
+            chown www-data:www-data . -R
+            sudo -u www-data composer install --no-dev
