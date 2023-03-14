@@ -18,6 +18,7 @@ jobs:
           KEY: ${{secrets.SSH_KEY}}
           SOURCE: ./
           TARGET: ${{ secrets.SSH_ROOT_PATH }}
+          ARGS_MORE: --filter=':- .gitignore' --delete-after
           POST_SCRIPT: |
             cd ${{ secrets.SSH_ROOT_PATH }}
             composer install --no-dev
