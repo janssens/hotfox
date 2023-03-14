@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Race;
+use App\Entity\State;
 use App\Event\SendRaceEmailEvent;
 use App\EventListener\RaceEmailer;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -14,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Dto\BatchActionDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -45,14 +47,23 @@ class RaceCrudController extends AbstractCrudController
     {
         return [
             IdField::new('ID')->hideOnForm(),
+            DateTimeField::new('createdAt')->onlyOnDetail(),
             TextField::new('name','Nom de l\'événement'),
-            DateTimeField::new('date','Date de l\'épreuve'),
-            DateTimeField::new('deposit_date','Date de dépot du dossier'),
+            DateField::new('date','Date de l\'épreuve'),
+            DateField::new('deposit_date','Date de dépot du dossier'),
             AssociationField::new('states','Départements concernés')
+                ->formatValue(static function ($value, Race $race) {
+                    $t = [];
+                    foreach ($race->getStates() as $state){
+                        $t[] = $state->__toString();
+                    }
+                    return implode(',',$t);
+                })
                 ->setFormTypeOptionIfNotSet('by_reference', false),
             AssociationField::new('instructor','Instructeur assigné'),
             BooleanField::new('email_sent','Email déjà envoyé aux instructeur ?'),
-            DateTimeField::new('createdAt')->onlyOnDetail(),
+            ArrayField::new('replies','réponses')
+                ->onlyOnDetail()
         ];
     }
 

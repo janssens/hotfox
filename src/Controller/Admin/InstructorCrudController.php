@@ -3,10 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Instructor;
+use App\Entity\Race;
+use App\Entity\Reply;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -50,8 +53,8 @@ class InstructorCrudController extends AbstractCrudController
             AssociationField::new('state','département'),
             TextField::new('club','club'),
             BooleanField::new('is_active','Peut instruire (actif) ?'),
-            AssociationField::new('races','nombre d\'épreuves assignées')->hideOnForm(),
-            TextField::new('races_names','épreuves assignées')->onlyOnDetail(),
+            ArrayField::new('races_names','épreuves assignées')->onlyOnDetail(),
+            ArrayField::new('replies','réponses')->onlyOnDetail(),
         ];
     }
 

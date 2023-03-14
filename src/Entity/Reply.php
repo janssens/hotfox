@@ -81,4 +81,9 @@ class Reply
         return $this->token;
     }
 
+    public function __toString(): string
+    {
+        return $this->getRace()->getName() . ' | ' . $this->getInstructor()->getName() . ' : ' . (($this->getAnswer()) ? $this->getAnswer()->getContent() : 'N/A');
+    }
+
 }
