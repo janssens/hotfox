@@ -1,0 +1,23 @@
+name: Deploy
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+      - name: 🚀 deploy src 📁
+        uses: up9cloud/action-rsync@master
+        env:
+          HOST: ${{ secrets.SSH_HOST }}
+          USER: ${{ secrets.SSH_USER }}
+          PORT: ${{ secrets.SSH_PORT }}
+          KEY: ${{secrets.SSH_KEY}}
+          SOURCE: ./src
+          TARGET: ${{ secrets.SSH_ROOT_PATH }}
+          POST_SCRIPT: |
+            cd ${{ secrets.SSH_ROOT_PATH }} 
+            php bin/console cache:clear
