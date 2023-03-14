@@ -62,14 +62,13 @@ class DefaultController extends AbstractController
             $reply->setAnswer($question);
             $this->em->persist($reply);
             $this->em->flush();
-            $message = 'Votre réponse a bien été prise en compte, merci.';
+            $this->addFlash('success', 'Votre réponse a bien été prise en compte, merci.');
         }else{
-            $message = 'Vous avez déjà répondu à cette question.';
+            $this->addFlash('notice', 'Vous avez déjà répondu à cette question.');
         }
         return $this->render('default/thank_you.html.twig',
-            [   'answer'=>$reply->getAnswer(),
+            [   'reply'=>$reply,
                 'questions'=>$questions,
-                'message' => $message,
                 'token' => $token
             ]);
     }

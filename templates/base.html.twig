@@ -3,6 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="robots" content="INDEX,FOLLOW"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -13,10 +15,59 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
         <style>
+            body{
+                color: #222f3e;
+                font-family: Tahoma, Verdana, Segoe, sans-serif;
+                background: #000 url('/img/background.webp') center center no-repeat;
+                background-size: cover;
+                min-height: 100vh;
+            }
+            a {
+                color: #2e86de;
+            }
+            a:visited {
+                color: #54a0ff;
+            }
+            .messages {
+                text-align: center;
+                background: white
+            }
+            .messages > div {
+                margin: 2rem;
+                font-size: 20px;
+                font-weight: bold;
+            }
+            .messages .success { color: #10ac84;}
+            .messages .error { color: #ee5253;}
+            .messages .notice { color: #5f27cd;}
             .wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+            footer{
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 1rem;
+                text-align: center;
+            }
         </style>
     </head>
     <body>
+        <div class="messages wrapper">
+            {% for success in app.flashes('success') %}
+                <div class="success">{{ success }}</div>
+            {% endfor %}
+            {% for error in app.flashes('error') %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+            {% for notice in app.flashes('notice') %}
+                <div class="notice">{{ notice }}</div>
+            {% endfor %}
+        </div>
         {% block body %}{% endblock %}
+        <footer>
+            <small>
+                &copy; background image  @david marcu from unsplash
+            </small>
+        </footer>
     </body>
 </html>

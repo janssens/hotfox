@@ -3,12 +3,15 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Instructor;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class InstructorCrudController extends AbstractCrudController
@@ -16,6 +19,13 @@ class InstructorCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return Instructor::class;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -32,14 +42,16 @@ class InstructorCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('ID')->hideWhenCreating(),
+            IdField::new('id')->hideOnForm(),
             TextField::new('firstname','prénom'),
             TextField::new('lastname','nom'),
             TextField::new('email','courriel'),
-            TextField::new('phone','téléphone'),
+            TelephoneField::new('phone','téléphone'),
             AssociationField::new('state','département'),
             TextField::new('club','club'),
             BooleanField::new('is_active','Peut instruire (actif) ?'),
+            AssociationField::new('races','nombre d\'épreuves assignées')->hideOnForm(),
+            TextField::new('races_names','épreuves assignées')->onlyOnDetail(),
         ];
     }
 

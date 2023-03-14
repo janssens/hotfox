@@ -1,22 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Merci !{% endblock %}
+{% block title %}Merci {{ reply.Instructor.Firstname }} !{% endblock %}
 
 {% block body %}
+    <style>
+        label{
+            padding: 1rem;
+            display: block;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        label:has( > input:checked){
+            border:2px solid black;
+        }
+    </style>
     <div class="wrapper">
-        <div style="background: rbga(0,0,0,0.1); padding: 0.5rem;">
-            <strong>{{ message }}</strong>
-        </div>
+        <h3>Bonjour {{ reply.Instructor.Firstname }}</h3>
+        <p>Souhaitez vous instruire <b>{{ reply.Race.name }}</b> qui est programmé le <i>{{ reply.Race.date|date('d M Y') }}</i> dans
+            {% if reply.Race.states | length > 1 %}les departements
+            {% else %} le département
+            {% endif %}
+            {{ reply.Race.states | join(', ', ' et ') }}</p>
         <form action="{{ url('reply') }}" method="post">
             <input type="hidden" value="{{ token }}" name="token">
             {% for question in questions %}
-                <label for="{{ question.id }}" {% if question.color %}style="color:{{ question.color }}"{% endif %}>
-                    <input id="{{ question.id }}" type="radio" name="short" value="{{ question.short }}" {% if answer == question %} checked="checked" {% endif %}>
+                <label for="{{ question.id }}" style="{% if question.color %}background:{{ question.color }};{% endif %}">
+                    <input id="{{ question.id }}" type="radio" name="short" value="{{ question.short }}" {% if reply.Answer == question %} checked="checked" {% endif %}>
                     <span>{{ question.content }}</span>
                 </label>
                 <br>
             {% endfor %}
-            <button type="submit">Modifier ma réponse</button>
+            <div style="text-align: center">
+                <button type="submit" style="background: white; padding: 1rem 3rem; text-align: center; border-radius: 10px; cursor: pointer; font-size: 20px;">Modifier ma réponse</button>
+            </div>
+
         </form>
     </div>
 {% endblock %}

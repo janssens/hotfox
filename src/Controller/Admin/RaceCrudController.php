@@ -70,6 +70,7 @@ class RaceCrudController extends AbstractCrudController
             ->linkToCrudAction('forceSendEmail');
 
         return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->add(Crud::PAGE_INDEX, $reSendEmail)
             ->add(Crud::PAGE_INDEX, $sendEmail);
     }

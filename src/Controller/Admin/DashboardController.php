@@ -41,17 +41,17 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Html');
+            ->setTitle('Instruction Raids FFTRI Ligue Aura');
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Accueil', 'fa fa-home');
         yield MenuItem::linkToCrud('Les instructeurs', 'fas fa-chalkboard-user', Instructor::class);
-        yield MenuItem::linkToCrud('Les départements', 'fas fa-location-dot', State::class);
         yield MenuItem::linkToCrud('Les épreuves', 'fas fa-person-running', Race::class);
-        yield MenuItem::linkToCrud('Les questions', 'fas fa-question', Question::class);
-        yield MenuItem::linkToCrud('Les utilisateurs', 'fas fa-user', User::class);
+        yield MenuItem::linkToCrud('Les départements', 'fas fa-location-dot', State::class)->setPermission('ROLE_SUPER_ADMIN');
+        yield MenuItem::linkToCrud('Les questions', 'fas fa-question', Question::class)->setPermission('ROLE_SUPER_ADMIN');
+        yield MenuItem::linkToCrud('Les utilisateurs', 'fas fa-user', User::class)->setPermission('ROLE_SUPER_ADMIN');
         yield MenuItem::linkToLogout('Logout', 'fas fa-sign-out');
     }
 }

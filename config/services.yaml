@@ -26,8 +26,20 @@ services:
             -
                 name: 'doctrine.event_listener'
                 event: 'prePersist'
-                priority: 500
-                connection: 'default'
+                entity: 'App\Entity\User'
+            -
+                name: 'doctrine.event_listener'
+                event: 'preUpdate'
+                entity: 'App\Entity\User'
+            -
+                name: 'doctrine.event_listener'
+                event: 'prePersist'
+                entity: 'App\Entity\Instructor'
+            -
+                name: 'doctrine.event_listener'
+                event: 'preUpdate'
+                entity: 'App\Entity\Instructor'
+
     App\EventListener\RaceEmailer:
         tags:
             -

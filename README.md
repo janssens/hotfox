@@ -18,9 +18,3 @@ docker-compose exec php composer install
 
 app run at http://localhost/ and
 mailcatcher run at http://localhost:8080/
-
-
-todo :
-
-## colors
-- https://flatuicolors.com/palette/ca

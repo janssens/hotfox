@@ -57,10 +57,10 @@ class SecurityController extends AbstractController
             'sign_in_label' => 'Connexion',
 
             // the 'name' HTML attribute of the <input> used for the username field (default: '_username')
-            'username_parameter' => 'my_custom_username_field',
+            'username_parameter' => '_username',
 
             // the 'name' HTML attribute of the <input> used for the password field (default: '_password')
-            'password_parameter' => 'my_custom_password_field',
+            'password_parameter' => '_password',
 
             // whether to enable or not the "forgot password?" link (default: false)
             'forgot_password_enabled' => false,
@@ -83,5 +83,13 @@ class SecurityController extends AbstractController
             // the label displayed for the remember me checkbox (the |trans filter is applied to it)
             'remember_me_label' => 'Se souvenir de moi',
         ]);
+    }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logout()
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

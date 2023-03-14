@@ -1,11 +1,11 @@
 {# templates/emails/new_race.html.twig #}
 
-Bonjour à toutes et à tous,<br>
-vous êtes référencés comme instructeurs Raid.<br>
+Bonjour {{ reply.Instructor.Firstname }},<br>
+Vous faites partie de la liste des instructeurs référencés.<br>
 <br>
 Une nouvelle épreuve de raid est à instruire.<br>
 <br>
-<b>{{ race.name }}</b> programmé le <i>{{ race.date|date('d M Y') }}</i> dans
+<b>{{ race.name }}</b> est programmé le <i>{{ race.date|date('d M Y') }}</i> dans
 {% if race.states | length > 1 %}les departements
 {% else %} le département
 {% endif %}
@@ -23,5 +23,5 @@ Positionnez vous : <br>
 </table>
 
 <br>
-Merci pour vos retours,<br>
+Merci pour votre retour,<br>
 cordialement

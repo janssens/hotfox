@@ -197,6 +197,15 @@ class Instructor
         return $this->races;
     }
 
+    public function getRacesNames() : string
+    {
+        $r = [];
+        foreach ($this->getRaces() as $race){
+            $r[] = $race->getName();
+        }
+        return implode(',',$r);
+    }
+
     public function addRace(Race $race): self
     {
         if (!$this->races->contains($race)) {

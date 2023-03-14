@@ -5,7 +5,11 @@ namespace App\Controller\Admin;
 use App\Entity\State;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_SUPER_ADMIN")
+ */
 class StateCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

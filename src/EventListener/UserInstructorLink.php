@@ -8,12 +8,20 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class UserInstructorLink
 {
+    public function preUpdate(LifecycleEventArgs $args): void
+    {
+        $this->link($args);
+    }
 
     public function prePersist(LifecycleEventArgs $args): void
     {
-        $entity = $args->getObject();
+        $this->link($args);
+    }
 
-        if (!$entity instanceof User || !$entity instanceof Instructor) {
+    private function link( LifecycleEventArgs $args): void
+    {
+        $entity = $args->getObject();
+        if (!$entity instanceof User && !$entity instanceof Instructor) {
             return;
         }
 
@@ -34,4 +42,5 @@ class UserInstructorLink
             }
         }
     }
+
 }
